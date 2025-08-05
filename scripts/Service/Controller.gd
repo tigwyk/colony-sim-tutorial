@@ -8,6 +8,7 @@ extends Node2D
 
 signal set_tile(pos, object)
 signal object_selected(object: Object)
+signal object_hovered(object: Object)
 
 var selectedUnits: Array[Unit]
 
@@ -26,6 +27,19 @@ func tileSelected(_pos: Vector2i):
 				emit_signal("object_selected", cell.building)
 			elif cell.plant:
 				emit_signal("object_selected", cell.plant)
+
+# Input - tile hovered
+func tileHovered(_pos: Vector2i):
+	if grid.grid.has(_pos):
+		var cell: Cell = grid.grid[_pos]
+		if cell.item:
+			emit_signal("object_hovered", cell.item)
+		elif cell.building:
+			emit_signal("object_hovered", cell.building)
+		elif cell.plant:
+			emit_signal("object_hovered", cell.plant)
+		else:
+			emit_signal("object_hovered", null)
 
 func unitSelected(unit: Unit):
 	if state == STATE.select:

@@ -12,6 +12,7 @@ func _ready():
 #	Connect grid input to controller
 	grid.tile_selected.connect(controller.tileSelected)
 	grid.tile_move_clicked.connect(controller.orderMoveTo)
+	grid.tile_hovered.connect(controller.tileHovered)
 	
 #	Initialize the game grid
 	grid.initializeGrid()
@@ -24,6 +25,7 @@ func _ready():
 	
 #	Connect controller to UI
 	controller.object_selected.connect(infoPanel.setSelectedObject)
+	controller.object_hovered.connect(infoPanel.setHoveredObject)
 	guiBtns.startPlacing.connect(controller.setPlacing)
 	guiBtns.startZoning.connect(controller.setStockpileZone)
 	guiBtns.cancel.connect(controller.cancelAction)

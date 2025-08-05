@@ -14,6 +14,7 @@ var grid: Dictionary = {}
 
 signal tile_selected(pos: Vector2i)
 signal tile_move_clicked(pos: Vector2i)
+signal tile_hovered(pos: Vector2i)
 
 func initializeGrid() -> void:
 	# Get all used tiles
@@ -101,9 +102,11 @@ func getNearestUnoccupiedCell(_pos: Vector2i, radius: int):
 				return cell
 	return null
 
-# Input - get clicked tile
+# Input - get clicked tile and mouse hover
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 		emit_signal("tile_selected", floorLayer.local_to_map(get_global_mouse_position()))
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
 		emit_signal("tile_move_clicked", floorLayer.local_to_map(get_global_mouse_position()))
+	elif event is InputEventMouseMotion:
+		emit_signal("tile_hovered", floorLayer.local_to_map(get_global_mouse_position()))
